@@ -38,7 +38,7 @@ namespace HuaweiMobileServices.CloudStorage
 
         public ITask<ListResult> ListAll() => CallAsWrapper<TaskJavaObjectWrapper<ListResult>>("listAll");
 
-        public UploadTask PutFile(File srcFile, FileMetadata attribute, long offset) => CallAsWrapper<UploadTask>("putFile", srcFile, attribute, offset);
+        public UploadTask PutFile(File srcFile, FileMetadata attribute, long offset) => CallAsWrapper<UploadTask>("putFile", srcFile, attribute, offset.AsJavaLong());
 
         public UploadTask PutFile(File srcFile, FileMetadata attribute) => CallAsWrapper<UploadTask>("putFile", srcFile, attribute);
 
@@ -46,7 +46,7 @@ namespace HuaweiMobileServices.CloudStorage
 
         public UploadTask PutBytes(byte[] bytes, FileMetadata attribute) => CallAsWrapper<UploadTask>("putBytes", bytes, attribute);
 
-        public UploadTask PutBytes(byte[] bytes, FileMetadata attribute, long offset) => CallAsWrapper<UploadTask>("putBytes", bytes, attribute, offset);
+        public UploadTask PutBytes(byte[] bytes, FileMetadata attribute, long offset) => CallAsWrapper<UploadTask>("putBytes", bytes, attribute, offset.AsJavaLong());
 
         public DownloadTask GetFile(File destFile) => CallAsWrapper<DownloadTask>("getFile", destFile);
 
@@ -56,7 +56,12 @@ namespace HuaweiMobileServices.CloudStorage
 
         public StreamDownloadTask GetStream(StreamDownloadTask.StreamHandler streamHandler) => CallAsWrapper<StreamDownloadTask>("getStream", streamHandler);
 
-        public ITask<byte[]> GetBytes(long maxDownloadBytes) => Call<TaskPrimitive<byte[]>>("getBytes", maxDownloadBytes);
+        public ITask<byte[]> GetBytes(long maxDownloadBytes) => Call<ITask<byte[]>>("getBytes", maxDownloadBytes); //Java da byte array i alıp strin array olarak dönen bir method yap belki?
+        /*{
+            ITask<object[]> a = 
+            Debug.LogError("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + a.GetType());
+            return (ITask<byte[]>)a;
+        }  */
 
         public ITask<Uri> getDownloadUrl() => CallAsWrapper<TaskJavaObjectWrapper<Uri>>("getDownloadUrl");
 
